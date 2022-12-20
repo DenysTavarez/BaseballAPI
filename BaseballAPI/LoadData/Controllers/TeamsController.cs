@@ -41,26 +41,26 @@ public class TeamsController : ControllerBase
         return TeamDTO == null ? NotFound() : Ok(TeamDTO);
     }
 
-   /* [HttpGet("TeamRank/{id:int}")]
-    public async Task<ActionResult> GetTeamWithRank(int id)
+    [HttpGet("TeamPlayers/{id:int}")]
+    public async Task<ActionResult> GetTeamPlayers(int id)
     {
-        TeamRank? TeamDTO = await _context.Teams
+        var TeamDTO = await _context.Teams
             .Where(c => c.Id == id)
-            .Select(c => new TeamRank
+            .Select(c => new 
             {
-                Id = c.Id,
-                Name = c.TeamName,
-                Population = c.Players.Select(t => t.Population).Sum()
+                 c.Id,
+                 c.TeamName,
+                 c.Players
             }).SingleOrDefaultAsync();
 
         return TeamDTO == null ? NotFound() : Ok(TeamDTO);
     }
-   */
-    [HttpGet("Players/{id:int}")]
-    public async Task<ActionResult<PlayerDto>> GetPlayers(int id)
+   
+    [HttpGet("Players")]
+    public async Task<ActionResult<PlayerDto>> GetPlayers()
     {
         List<PlayerDto> playerDto = await _context.Players
-            .Where(c => c.TeamId == id)
+           
             .Select(c => new PlayerDto
             {
                 Id = c.Id,
